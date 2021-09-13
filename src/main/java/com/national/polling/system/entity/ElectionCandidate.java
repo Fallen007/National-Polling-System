@@ -8,18 +8,19 @@ import javax.persistence.*;
 
 @Table(name = "election_candidates")
 @Entity
-@IdClass(ElectionCandidatePKey.class)
 @Getter
 @Setter
 @ToString
 public class ElectionCandidate {
-    @Id
     @Column(name = "election_id")
     private Integer electionId;
 
     @Id
     @Column(name = "candidate_id")
     private Long candidateId;
+
+    @Column(name = "candidate_voter_id")
+    private Long candidateVoterId;
 
     @Column(name = "political_party")
     private String politicalParty;
