@@ -1,1 +1,9 @@
-
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/polling_system"
+    username: admin
+    password: admin_password
