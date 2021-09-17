@@ -16,6 +16,7 @@ public class ElectionCandidate {
     private Integer electionId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "candidate_id")
     private Long candidateId;
 
