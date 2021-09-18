@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Administrator {
+public class Admin {
     @Id
     @Column(name = "email", nullable = false)
     private String email;

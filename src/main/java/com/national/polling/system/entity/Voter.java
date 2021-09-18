@@ -13,6 +13,7 @@ import javax.persistence.*;
 @ToString
 public class Voter {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "voter_id", nullable = false)
     private Long voterId;
 

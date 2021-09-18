@@ -4,10 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Table(name = "elections")
@@ -17,6 +14,7 @@ import java.time.LocalDate;
 @ToString
 public class Election {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "election_id", nullable = false)
     private Integer electionId;
 
