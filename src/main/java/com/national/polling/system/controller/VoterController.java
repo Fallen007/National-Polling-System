@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class VoterController {
@@ -24,35 +23,36 @@ public class VoterController {
     }
 
     @PostMapping("/Voters")
-    public ResponseEntity<VoterDTO> addVoterDetails(@RequestBody VoterDTO voterDTO){
+    public ResponseEntity<VoterDTO> addVoterDetails(@RequestBody VoterDTO voterDTO) {
         Voter voter = mapper.voterDtoToVoter(voterDTO);
-        voter = voterService.addVoter(voter);
-        voterDTO = mapper.voterToVoterDto(voter);
+        voterDTO = mapper.voterToVoterDto(voterService.addVoter(voter));
         return ResponseEntity.ok(voterDTO);
     }
 
     @GetMapping("/Voters")
-    public ResponseEntity<List<VoterDTO>> getVotersList(){
-        List<VoterDTO> votersList = new ArrayList<>();
-        voterService.getAllVoters().forEach(voter -> votersList.add(mapper.voterToVoterDto(voter)));
-        return ResponseEntity.ok(votersList);
+    public ResponseEntity<List<VoterDTO>> getVotersList() {
+        return ResponseEntity.ok(
+            voterService.getAllVoters()
+                .stream()
+                .map(voter -> mapper.voterToVoterDto(voter))
+                .collect(Collectors.toList())
+        );
     }
 
     @GetMapping("/Voters/{voterId}")
-    public ResponseEntity<VoterDTO> getVoterDetailsById(@PathVariable Long voterId){
-        Optional<Voter> voter = voterService.getVoterById(voterId);
-        VoterDTO voterDTO = new VoterDTO();
-        if(voter.isPresent())
-            voterDTO = mapper.voterToVoterDto(voter.get());
-        return ResponseEntity.ok(voterDTO);
+    public ResponseEntity<VoterDTO> getVoterDetailsById(@PathVariable Long voterId) {
+        return ResponseEntity.ok(
+            voterService.getVoterById(voterId)
+                .map(voter -> mapper.voterToVoterDto(voter))
+                .orElse(new VoterDTO())
+        );
     }
 
     @PutMapping("/Voters/{voterId}")
-    public ResponseEntity<VoterDTO> updateVoterDetails(@PathVariable Long voterId,@RequestBody VoterDTO voterDTO){
+    public ResponseEntity<VoterDTO> updateVoterDetails(@PathVariable Long voterId, @RequestBody VoterDTO voterDTO) {
         voterDTO.setVoterId(voterId);
         Voter voter = mapper.voterDtoToVoter(voterDTO);
-        voter = voterService.updateVoter(voter);
-        voterDTO = mapper.voterToVoterDto(voter);
+        voterDTO = mapper.voterToVoterDto(voterService.updateVoter(voter));
         return ResponseEntity.ok(voterDTO);
     }
 }
