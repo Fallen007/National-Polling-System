@@ -7,3 +7,6 @@ spring:
     url: "jdbc:postgresql://localhost:5432/polling_system"
     username: admin
     password: admin_password
+  flyway:
+    baseline-on-migrate: true
+    baseline-description: Initial_Table_Creation
