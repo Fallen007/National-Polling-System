@@ -29,12 +29,12 @@ public class VoterServiceImpl implements VoterService {
     }
 
     @Override
-    public Optional<Voter> getVoterById(Long voterId) {
+    public Voter getVoterById(Long voterId) {
         Optional<Voter> voterRecord = voterRepository.findById(voterId);
         if (voterRecord.isEmpty()) {
             throw new ResourceNotFoundException("Voter with VoterId: " + voterId + " does not exist");
         }
-        return voterRecord;
+        return voterRecord.get();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class VoterServiceImpl implements VoterService {
     public Voter updateVoter(Voter voter) {
         Long voterId = voter.getVoterId();
         String email = voter.getEmail();
-        Optional<Voter> existingVoterRecord = getVoterById(voterId);
+        Optional<Voter> existingVoterRecord = voterRepository.findById(voterId);
         if (existingVoterRecord.isEmpty()) {
             throw new ResourceNotFoundException("Voter with VoterId: " + voterId + " does not exist");
         }

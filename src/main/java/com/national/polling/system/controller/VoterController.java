@@ -41,11 +41,8 @@ public class VoterController {
 
     @GetMapping("/Voters/{voterId}")
     public ResponseEntity<VoterDTO> getVoterDetailsById(@PathVariable Long voterId) {
-        return ResponseEntity.ok(
-            voterService.getVoterById(voterId)
-                .map(voter -> mapper.voterToVoterDto(voter))
-                .orElse(new VoterDTO())
-        );
+        VoterDTO voterDTO = mapper.voterToVoterDto(voterService.getVoterById(voterId));
+        return ResponseEntity.ok(voterDTO);
     }
 
     @PutMapping("/Voters/{voterId}")
