@@ -30,7 +30,7 @@ class VoterServiceImplTest {
 
     @Test
     void addVoterPassingTest() {
-        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
+        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
         when(voterRepository.findByEmail(voter.getEmail())).thenReturn(null);
         when(voterRepository.save(any(Voter.class))).thenReturn(voter);
         assertEquals(voter, voterService.addVoter(voter));
@@ -38,14 +38,14 @@ class VoterServiceImplTest {
 
     @Test()
     void addVoterUniqueEmailFailTest() {
-        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
+        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
         when(voterRepository.findByEmail(voter.getEmail())).thenReturn(voter);
         assertThatThrownBy(() -> voterService.addVoter(voter)).isInstanceOf(ConflictWithExistingRecordException.class);
     }
 
     @Test
     void getVoterByIdPassingTest() {
-        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
+        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
         Optional<Voter> voterRecord = Optional.of(voter);
         when(voterRepository.findById(voter.getVoterId())).thenReturn(voterRecord);
         assertEquals(voter, voterService.getVoterById(voter.getVoterId()));
@@ -66,8 +66,8 @@ class VoterServiceImplTest {
 
     @Test
     void updateVoterPassingTest() {
-        Voter existingVoterDetails = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
-        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "tom.richardson@gmail.com");
+        Voter existingVoterDetails = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
+        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "tom.richardson@example.com");
         Optional<Voter> existingVoterRecord = Optional.of(existingVoterDetails);
         when(voterRepository.findById(updatedVoterDetails.getVoterId())).thenReturn(existingVoterRecord);
         when(voterRepository.findByEmail(updatedVoterDetails.getEmail())).thenReturn(null);
@@ -77,7 +77,7 @@ class VoterServiceImplTest {
 
     @Test
     void updateVoterInvalidVoterIdTest() {
-        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "tom.richardson@gmail.com");
+        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "tom.richardson@example.com");
         Optional<Voter> existingVoterRecord = Optional.empty();
         when(voterRepository.findById(updatedVoterDetails.getVoterId())).thenReturn(existingVoterRecord);
         assertThatThrownBy(() -> voterService.updateVoter(updatedVoterDetails)).isInstanceOf(ResourceNotFoundException.class);
@@ -85,9 +85,9 @@ class VoterServiceImplTest {
 
     @Test
     void updateVoterUniqueEmailFailTest() {
-        Voter existingVoterDetails = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
-        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "invalid.email@gmail.com");
-        Voter conflictingEmailRecord = new Voter(1754291L, "Morgan Freeman", "Male", 41, "Black", "South Dakota", "invalid.email@gmail.com");
+        Voter existingVoterDetails = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
+        Voter updatedVoterDetails = new Voter(1231219L, "Tom Richardson", "Male", 32, "Black", "Arizona", "invalid.email@example.com");
+        Voter conflictingEmailRecord = new Voter(1754291L, "Morgan Freeman", "Male", 41, "Black", "South Dakota", "invalid.email@example.com");
         Optional<Voter> existingVoterRecord = Optional.of(existingVoterDetails);
         when(voterRepository.findById(updatedVoterDetails.getVoterId())).thenReturn(existingVoterRecord);
         when(voterRepository.findByEmail(updatedVoterDetails.getEmail())).thenReturn(conflictingEmailRecord);

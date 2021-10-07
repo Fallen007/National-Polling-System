@@ -17,15 +17,15 @@ class MapStructMapperTest {
 
     @Test
     void voterDtoToVoterTest() {
-        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
-        VoterDTO voterDTO = new VoterDTO(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
+        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
+        VoterDTO voterDTO = new VoterDTO(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
         assertEquals(voter, mapper.voterDtoToVoter(voterDTO));
     }
 
     @Test
     void voterToVoterDtoTest() {
-        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
-        VoterDTO voterDTO = new VoterDTO(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@gmail.com");
+        Voter voter = new Voter(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
+        VoterDTO voterDTO = new VoterDTO(1231219L, "Tom Hardy", "Male", 32, "White", "California", "tom.hardy@example.com");
         assertEquals(voterDTO, mapper.voterToVoterDto(voter));
     }
 }
